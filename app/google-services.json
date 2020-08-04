@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "645846270017",
+    "firebase_url": "https://quickeats-c849b.firebaseio.com",
+    "project_id": "quickeats-c849b",
+    "storage_bucket": "quickeats-c849b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645846270017:android:7d9f2281c0dc0479f9c6c0",
+        "android_client_info": {
+          "package_name": "lk.hndit.quickeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645846270017-1dpfnmq62qh1hj15ii2a5gk7hecm8ep1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lk.hndit.quickeats",
+            "certificate_hash": "811a12fdcb0ca115e179d96d9868b5e7659ebbdc"
+          }
+        },
+        {
+          "client_id": "645846270017-t8ploivhc1fk4bupnu4l5n7smvmb8ph2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ3BDBDZhk3Qoz4ZYsbadD91ycLW811N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645846270017-t8ploivhc1fk4bupnu4l5n7smvmb8ph2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
