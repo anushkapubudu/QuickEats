@@ -8,4 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CollapsedAppbar" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textSize"> 24sp </item>
+        <item name="android:textColor">@color/design_default_color_surface</item>
+        <item name="android:textStyle"> normal</item>
+    </style>
+
+    <style name="ExpandedAppbar" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle"> normal</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+
+    <style name="SplashScreenTheme"  parent = "Theme.AppCompat.NoActionBar" >
+            <item  name="android:windowBackground">@drawable/splash_screen_background</item>
+    </style>
+
 </resources>

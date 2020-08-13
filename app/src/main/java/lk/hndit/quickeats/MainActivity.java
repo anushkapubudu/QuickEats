@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,36 +13,37 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
+import lk.hndit.quickeats.activity.AdminTest;
 import lk.hndit.quickeats.activity.UserDashboard;
 import lk.hndit.quickeats.activity.VerifyPhone;
+import lk.hndit.quickeats.model.User;
+import lk.hndit.quickeats.services.FirebaseDb;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private EditText edtxtEmail;
-    // private EditText edtxtpassword;
     private Button btnLogin;
     private FirebaseAuth auth;
     private FirebaseUser user;
     private FirebaseAuth.AuthStateListener authStateListener;
 
+    private String USERTYPE = null;
 
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser user = auth.getCurrentUser();
 
-        if(user != null){
-            startActivity(new Intent(MainActivity.this,UserDashboard.class));
-        }
-    }*/
 
 
 
     @Override
     protected void onStart() {
         super.onStart();
+        user = lk.hndit.quickeats.services.FirebaseAuth.getInstance().getCurrentUser();
+
+
         auth.addAuthStateListener(authStateListener);
     }
 
@@ -61,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        edtxtEmail = findViewById(R.id.edtxtEmail);
-        // edtxtpassword = findViewById(R.id.edtxtPassword);
+        edtxtEmail = findViewById(R.id.edtxtMobileNo);
         btnLogin = findViewById(R.id.btnLogin);
         auth = FirebaseAuth.getInstance();
 
@@ -71,14 +72,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                user = auth.getCurrentUser();
+
 
                 if (user != null){
-                    startActivity(new Intent(MainActivity.this,UserDashboard.class));
-                    finish();
-                    Toast.makeText(getApplicationContext(),"already Signed in !!!!!",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Please Log in to Continue !",Toast.LENGTH_LONG).show();
+//
+//                    startActivity(new Intent(MainActivity.this,UserDashboard.class));
+//                    finish();
+
+                    Log.d("TAG", "user : "+user.getDisplayName());
+
+
+                    FirebaseDb.databaseReference().child("user").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            Log.d("TAG", "+++++++===========================: "+snapshot.toString());
+
+                            if(snapshot.exists()){
+                                USERTYPE = snapshot.child("userType").getValue(String.class);
+                                Log.d("TAG", "+++++++===========================: "+snapshot.toString());
+
+                                switch (USERTYPE){
+
+                                    case "CUSTOMER":
+                                        startActivity(new Intent(MainActivity.this,UserDashboard.class));
+                                        finish();
+                                        break;
+                                    case "ADMIN":
+                                        startActivity(new Intent(MainActivity.this, AdminTest.class));
+                                        finish();
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    if(USERTYPE != null){
+
+                    }
+
                 }
 
             }
@@ -92,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 String number = edtxtEmail.getText().toString().trim();
 
                 if(number.isEmpty() || number.length() < 9){
-                    edtxtEmail.setError("Enter a valid mobile");
+                    edtxtEmail.setError("Enter valid mobile No.");
                     edtxtEmail.requestFocus();
                     return;
                 }

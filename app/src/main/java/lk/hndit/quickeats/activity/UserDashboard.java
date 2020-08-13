@@ -8,14 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,15 +20,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.quickeats.MainActivity;
 import lk.hndit.quickeats.R;
 import lk.hndit.quickeats.activity.adapters.CategoryRecylerviwAdapter;
 import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
 
 public class UserDashboard extends AppCompatActivity {
 
-    private FirebaseAuth auth;
+
     private FirebaseUser user;
     private Button btnLogout;
     private TextView textView;
@@ -47,12 +43,13 @@ public class UserDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_dashboard);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.user_bottom_navigation);
 
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        textView = findViewById(R.id.textView);
-        btnLogout = findViewById(R.id.btnLogout);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        //textView = findViewById(R.id.textView);
+       // btnLogout = findViewById(R.id.btnLogout);
         recyclerView = findViewById(R.id.categoryrecyclerviwUserDashboard);
         categoryList = new ArrayList();
         recyclerView.setHasFixedSize(true);
@@ -60,8 +57,10 @@ public class UserDashboard extends AppCompatActivity {
 
 
         int meniitemid = bottomNavigationView.getSelectedItemId();
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(meniitemid);
-        badge.setNumber(99);
+
+        bottomNavigationView.setSelectedItemId(R.id.page_1);
+//        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(meniitemid);
+//        badge.setNumber(99);
 
 
 
@@ -71,11 +70,16 @@ public class UserDashboard extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.page_1:
-                                Toast.makeText(UserDashboard.this, "page 1", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case R.id.page_2:
-                                Toast.makeText(UserDashboard.this, "page 2", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(UserDashboard.this, CartViw.class));
+                                finish();
+                                break;
+
+                            case R.id.page_3:
+                                startActivity(new Intent(UserDashboard.this, OrderViwUser.class));
+                                finish();
                                 break;
 
                             default:
@@ -110,15 +114,18 @@ public class UserDashboard extends AppCompatActivity {
         });
 
 
-        textView.setText(user.getPhoneNumber());
+        //textView.setText(user.getPhoneNumber());
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                auth.signOut();
-                startActivity(new Intent(UserDashboard.this, MainActivity.class));
-            }
-        });
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth.getInstance().signOutCurrentUser();
+//                startActivity(new Intent(UserDashboard.this, MainActivity.class));
+//
+//
+//
+//            }
+//        });
 
     }
 }

@@ -4,33 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.UserDashboard">
+    tools:context=".activity.OrderViwUser">
 
-
-
-
-   <!-- <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User Dashboard"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.245" />-->
 
 
     <LinearLayout
@@ -39,12 +14,19 @@
         android:orientation="vertical"
         app:layout_constraintVertical_weight="10">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryrecyclerviwUserDashboard"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/user_order_top_navigation"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_weight="1"
+            app:menu="@menu/user_order_top_navigation_menu"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_order_recyclerviw"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
@@ -52,8 +34,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/user_bottom_navigation"
+            android:id="@+id/bottom_navigation_order"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -61,9 +44,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout"
             app:layout_constraintVertical_bias="1.0"
             app:menu="@menu/user_bottom_navigation_menu" />
+
 
     </LinearLayout>
 

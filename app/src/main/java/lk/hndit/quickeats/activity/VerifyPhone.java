@@ -53,12 +53,16 @@ public class VerifyPhone extends AppCompatActivity {
                 String code = edtxtCode.getText().toString().trim();
 
                 if (code.isEmpty() || code.length() < 6) {
-                    edtxtCode.setError("Enter valid code");
+                    edtxtCode.setError("Enter valid code!");
                     edtxtCode.requestFocus();
                     return;
                 }
 
-                verifyVerificationCode(code);
+                if(mVerificationId != null){
+                    verifyVerificationCode(code);
+                }
+
+
             }
         });
     }
@@ -83,6 +87,8 @@ public class VerifyPhone extends AppCompatActivity {
 
             if (code != null) {
                 edtxtCode.setText(code);
+
+
                 verifyVerificationCode(code);
             }
         }
@@ -113,26 +119,19 @@ public class VerifyPhone extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            Intent intent = new Intent(VerifyPhone.this, UserDashboard.class);
+                            Intent intent = new Intent(VerifyPhone.this, CreateUser.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
 
                         } else {
 
-                            String message = "Somthing is wrong, we will fix it soon...";
+                            String message = "Something went wrong, we will fix it soon...";
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
+                                message = "Invalid Code!";
                             }
 
-                            Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG);
-                            snackbar.setAction("Dismiss", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                            snackbar.show();
+                            Toast.makeText(VerifyPhone.this, ""+message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

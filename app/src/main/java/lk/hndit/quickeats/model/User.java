@@ -7,17 +7,18 @@ public class User {
     private String contactNo;
     private String address;
     private String imageUrl;
-
+    private String userType;
 
     public User() {
     }
 
-    public User(String id, String name, String contactNo, String address, String imageUrl) {
+    public User(String id, String name, String contactNo, String address, String imageUrl, String userType) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
         this.address = address;
         this.imageUrl = imageUrl;
+        this.userType = userType;
     }
 
     public String getId() {
@@ -60,6 +61,14 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -68,6 +77,7 @@ public class User {
                 ", contactNo='" + contactNo + '\'' +
                 ", address='" + address + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", userType='" + userType + '\'' +
                 '}';
     }
 }
