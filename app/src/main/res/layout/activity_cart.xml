@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:layout_weight="10"
-    tools:context=".activity.CartViw">
+    tools:context=".activity.user.CartViw">
 
 
     <LinearLayout

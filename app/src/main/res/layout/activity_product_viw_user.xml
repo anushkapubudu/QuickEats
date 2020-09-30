@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".activity.ProductViwUser">
+    tools:context=".activity.user.ProductViwUser">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/procuctrecyclerviwuser"

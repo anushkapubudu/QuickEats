@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity;
+package lk.hndit.quickeats.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import lk.hndit.quickeats.MainActivity;
+import lk.hndit.quickeats.activity.MainActivity;
 import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.AdminTest;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
 
