@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity;
+package lk.hndit.quickeats.activity.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.adapters.ProductRecyclerViwAdapter;
+import lk.hndit.quickeats.activity.user.adapters.ProductRecyclerViwAdapter;
 import lk.hndit.quickeats.model.Product;
 import lk.hndit.quickeats.services.FirebaseDb;
 
@@ -38,7 +38,6 @@ public class ProductViwUser extends AppCompatActivity {
         intent=getIntent();
         categoryId = intent.getStringExtra("categoryId");
 
-        Toast.makeText(this, "=== "+categoryId, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.procuctrecyclerviwuser);
         list = new ArrayList();
@@ -55,7 +54,7 @@ public class ProductViwUser extends AppCompatActivity {
                     Product product  = postsnapshot.getValue(Product.class);
                     list.add(product);
                 }
-                Log.d("TAG", "onDataChange: =============="+list.toString());
+
                 adapter = new ProductRecyclerViwAdapter(list,getApplicationContext());
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);

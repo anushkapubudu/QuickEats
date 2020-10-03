@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity;
+package lk.hndit.quickeats.activity.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -8,12 +8,17 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +32,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,33 +43,43 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import lk.hndit.quickeats.MainActivity;
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.adapters.CartRecyclerViwAdapter;
+import lk.hndit.quickeats.activity.admin.TrackingOrderAdmin;
+import lk.hndit.quickeats.activity.user.adapters.CartRecyclerViwAdapter;
 import lk.hndit.quickeats.model.Cart;
 import lk.hndit.quickeats.model.Order;
 import lk.hndit.quickeats.model.Product;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.util.Common;
 import lk.hndit.quickeats.util.GpsTracker;
 
 public class CartViw extends AppCompatActivity {
 
-    private TextView txtCartTotal;
+    private TextView txtCartTotal, txtCartDiscount;
     private Button btnPlaceOrder;
     private RecyclerView recyclerView;
     private CartRecyclerViwAdapter adapter;
     private List<Cart> cartList;
     private List<Product> productList;
+    private ProgressDialog progressDialog;
+    private boolean isFirst = true;
+    private Order order;
+    private double discount = 0.00;
+
+
+
 
     private BottomNavigationView bottomNavigationView;
+    private LatLng myLatLng;
+    private String myAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +94,18 @@ public class CartViw extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+
+        order = new Order();
         txtCartTotal = findViewById(R.id.cartTotal);
+        txtCartDiscount = findViewById(R.id.cartDiscount);
         btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
         recyclerView = findViewById(R.id.cartrecyclerviw);
         cartList = new ArrayList<>();
         productList = new ArrayList<>();
         bottomNavigationView = findViewById(R.id.bottom_navigation_cart);
+
+        progressDialog = new ProgressDialog(this);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -123,6 +148,7 @@ public class CartViw extends AppCompatActivity {
                 DataSnapshot snapshot1 = snapshot.child("cart").child(user.getUid());
                 cartList.clear();
                 productList.clear();
+                discount =0.00;
                 for (DataSnapshot post : snapshot1.getChildren()){
                     Cart cart = post.getValue(Cart.class);
                     cartList.add(cart);
@@ -160,7 +186,10 @@ public class CartViw extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                if(cartList.size()!=0){
-                   requestOrder();
+                   Toast.makeText(CartViw.this, "Loading GPS data..Please wait...", Toast.LENGTH_LONG).show();
+                   progressDialog.setMessage("Loading GPS data...");
+                   progressDialog.show();
+                   loadLocationData();
                }
            }
        });
@@ -170,136 +199,112 @@ public class CartViw extends AppCompatActivity {
     private void calculateCartToatal() {
 
         double total = 0.00;
+
         for(int i=0; i<cartList.size(); i++){
             Cart cartTemp = cartList.get(i);
             Product productTemp = productList.get(i);
-            total += productTemp.getPrice()*cartTemp.getQuantity();
+            total += (productTemp.getPrice()-productTemp.getPrice()*productTemp.getDiscount()/100) *cartTemp.getQuantity();
+            discount+=productTemp.getPrice()*productTemp.getDiscount()/100;
         }
 
         txtCartTotal.setText(String.valueOf(total));
+        txtCartDiscount.setText(String.valueOf(discount));
     }
 
 
 
     private void requestOrder() {
 
-        Order order;
 
-        final AlertDialog dialog2;
+        //alert dialog get contact number (dialog 3)
 
-        //create address (step 2)
+        final EditText contactDialogView = new EditText(this);
+        AlertDialog.Builder cndialog = new AlertDialog.Builder(this);
+        contactDialogView.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+        cndialog.setView(contactDialogView);
+        cndialog.setTitle("Contact details..");
+        cndialog.setIcon(R.drawable.ic_call_black_24dp);
 
-        final AlertDialog.Builder alertdialog2 = new AlertDialog.Builder(CartViw.this);
-        alertdialog2.setTitle("Delivery Location");
-        alertdialog2.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        String[] animals = {"My Address", "This Location"};
 
-        alertdialog2.setSingleChoiceItems(animals, -1, new DialogInterface.OnClickListener() {
+
+        cndialog.setPositiveButton("Place Order !", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                order.setContactNo(contactDialogView.getText().toString());
 
-                switch (which){
-                    case 0:
-                        break;
-                    case 1:
-                        dialog.dismiss();
-                        ProgressDialog d = new ProgressDialog(CartViw.this);
-                        d.setMessage("loading GPS data...");
-                        d.show();
+                Date currentTime = Calendar.getInstance().getTime();
+                DatabaseReference ref = FirebaseDb.databaseReference().child("order");
+                String orderId = ref.push().getKey();
 
-                        GpsTracker gpsTracker = new GpsTracker(CartViw.this);
+                order.setDateTime(currentTime.toString());
+                order.setCartList(cartList);
+                order.setDiscount(discount);
+                order.setLatitude(myLatLng.latitude);
+                order.setLongitude(myLatLng.longitude);
+                order.setTotalPrice(Double.parseDouble(txtCartTotal.getText().toString()));
+                order.setStatus(0);
+                order.setOrderId(orderId);
+                order.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                            if(gpsTracker.canGetLocation()){
-                                double latitude = gpsTracker.getLatitude();
-                                double longitude = gpsTracker.getLongitude();
 
-                                        if(latitude != 0 && longitude != 0 ) {
-                                            DatabaseReference ref = FirebaseDb.databaseReference().child("order");
-                                            Date currentTime = Calendar.getInstance().getTime();
-                                            Order order = new Order(ref.push().getKey(), cartList, Double.parseDouble(txtCartTotal.getText().toString()), 0.0, FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().toString(), "address", FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), currentTime.toString(), latitude, longitude, 0);
+                if(order.getOrderId() != null && order.getCartList() != null && order.getUserId() != null){
+                    ref.child(orderId).setValue(order).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            FirebaseDb.databaseReference().child("cart").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
 
-                                            boolean b = FirebaseDb.getInstance().create("order", order.getOrderId(), order);
-
-                                            if (b) {
-                                                FirebaseDb.getInstance().delete("cart", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                                d.dismiss();
-                                                Toast.makeText(CartViw.this, "Order Placed ! ThankYou ", Toast.LENGTH_SHORT).show();
-
-                                            }
-                                        }
-
-                            }else {
-                                d.dismiss();
-                                gpsTracker.showSettingsAlert();
-                            }
+                            Toast.makeText(CartViw.this, "Your Order Received, Thank you!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(CartViw.this,OrderViwUser.class));
+                            finish();
+                        }
+                    });
                 }
 
             }
         });
 
 
+        final AlertDialog contactDialog = cndialog.create();
 
 
 
-//        alertdialog2.setMessage("set Delivery Location to Deliver");
-//        alertdialog2.setIcon(R.drawable.ic_shopping_cart_black_24dp);
-//
-//        //final EditText address = new EditText(CartViw.this);
-//        final Button address = new Button(CartViw.this);
-//        address.setText("Deliver to This Location");
-//        address.setBackgroundColor(Color.parseColor("#27ae60"));
-//        address.setTextColor(Color.parseColor("#ecf0f1"));
-//        address.setMaxWidth(20);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-//        address.setLayoutParams(layoutParams);
-//        alertdialog2.setView(address);
-//
-//        address.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(CartViw.this, "presses", Toast.LENGTH_SHORT).show();
-//                GpsTracker gpsTracker = new GpsTracker(CartViw.this);
-//
-//                if(gpsTracker.canGetLocation()){
-//                    double latitude = gpsTracker.getLatitude();
-//                    double longitude = gpsTracker.getLongitude();
-//
-//
-//                    Log.d("TAG", "=============== L : "+latitude+"  Lo: "+longitude);
-//                }else {
-//                    gpsTracker.showSettingsAlert();
-//                }
-//
-//
-//            }
-//        });
-//        alertdialog2.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//                DatabaseReference ref = FirebaseDb.databaseReference().child("order");
-//                Date currentTime = Calendar.getInstance().getTime();
-//                Order order = new Order(ref.push().getKey(),cartList,Double.parseDouble(txtCartTotal.getText().toString()),0.0,FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().toString(),"address",FirebaseAuth.getInstance().getCurrentUser().getUid().toString(),currentTime.toString(),0);
-//
-//
-//                boolean b = FirebaseDb.getInstance().create("order", order.getOrderId(), order);
-//
-//                if(b){
-//                    FirebaseDb.getInstance().delete("cart",FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                    Toast.makeText(CartViw.this, "Order Placed ! ThankYou ", Toast.LENGTH_SHORT).show();
-//
-//                }
-//
-//
-//            }
-//        });
+        //alert dialog get address (dialog 2)
+
+        final EditText addressDialogView = new EditText(this);
+        AlertDialog.Builder addialog = new AlertDialog.Builder(this);
+        addressDialogView.setText(myAddress);
+        addialog.setView(addressDialogView);
+        addialog.setTitle("Delivery Address..");
+        addialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+        addialog.setNeutralButton("reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        addialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        addialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                order.setAddress(addressDialogView.getText().toString());
+                contactDialog.show();
+                contactDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#f1c40f"));
+
+            }
+        });
 
 
-        dialog2 = alertdialog2.create();
-
-
-
+        final AlertDialog addressDialog = addialog.create();
 
 
         //confirm billing details (step 1)
@@ -364,8 +369,10 @@ public class CartViw extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
-                dialog2.show();
-                //finish();
+                progressDialog.dismiss();
+                addressDialog.show();
+                addressDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#f1c40f"));
+
             }
         });
 
@@ -373,11 +380,111 @@ public class CartViw extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                progressDialog.dismiss();
             }
         });
 
-        alertdialog.show();
+        AlertDialog dialog = alertdialog.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#f1c40f"));
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.parseColor("#2ecc71"));
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#e74c3c"));
+
 
     }
+
+
+
+    private void loadLocationData() {
+
+
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+
+        try {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+        android.location.LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+
+                myLatLng = new LatLng(location.getLatitude(),location.getLongitude());
+
+                /*------- To get city name from coordinates -------- */
+
+                Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+                List<Address> addresses;
+                try {
+                    addresses = gcd.getFromLocation(location.getLatitude(),
+                            location.getLongitude(), 1);
+                    if (addresses.size() > 0) {
+                        System.out.println(addresses.get(0).getLocality());
+
+                        String address = addresses.get(0).getAddressLine(0);
+                        String city = addresses.get(0).getLocality();
+                        String postalCode = addresses.get(0).getPostalCode();
+
+                        myAddress = address+", "+city+". ";
+                        if(isFirst){
+                            requestOrder();
+                            isFirst = false;
+                        }
+
+                    }
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+
+        GpsTracker gpsTracker = new GpsTracker(CartViw.this);
+
+        if(gpsTracker.canGetLocation()){
+
+        }else {
+            gpsTracker.showSettingsAlert();
+        }
+
+
+
+
+
+
+    }
+
+
 
 }

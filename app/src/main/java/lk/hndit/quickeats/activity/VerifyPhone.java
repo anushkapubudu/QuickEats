@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity.user;
+package lk.hndit.quickeats.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

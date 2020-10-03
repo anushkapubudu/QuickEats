@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity.user;
+package lk.hndit.quickeats.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.user.UserDashboard;
 import lk.hndit.quickeats.model.User;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
@@ -71,7 +72,7 @@ public class CreateUser extends AppCompatActivity {
                     b = FirebaseDb.getInstance().create("user", user.getId(), user);
                 }
                 if(b){
-                    startActivity(new Intent(CreateUser.this,UserDashboard.class));
+                    startActivity(new Intent(CreateUser.this, UserDashboard.class));
                     finish();
                 }
             }

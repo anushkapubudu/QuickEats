@@ -1,4 +1,4 @@
-package lk.hndit.admin_quickeats.activitys;
+package lk.hndit.quickeats.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.activitys.adapters.AdminProductsRecycleViwAdapter;
-import lk.hndit.admin_quickeats.model.Product;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.adapters.AdminProductsRecycleViwAdapter;
+import lk.hndit.quickeats.model.Product;
+import lk.hndit.quickeats.services.FirebaseDb;
 
 public class ProductViwAdmin extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity;
+package lk.hndit.quickeats.activity.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.adapters.OrderRecyclerViwAdapter;
+import lk.hndit.quickeats.activity.user.adapters.OrderRecyclerViwAdapter;
 import lk.hndit.quickeats.model.Order;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;

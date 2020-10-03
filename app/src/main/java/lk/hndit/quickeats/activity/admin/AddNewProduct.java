@@ -1,8 +1,7 @@
-package lk.hndit.admin_quickeats.activitys;
+package lk.hndit.quickeats.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,11 +26,11 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.model.Product;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
-import lk.hndit.admin_quickeats.services.FirebaseStorage;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.model.Product;
+import lk.hndit.quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.services.FirebaseStorage;
 
 public class AddNewProduct extends AppCompatActivity {
 
@@ -194,8 +193,9 @@ public class AddNewProduct extends AppCompatActivity {
                             dialog.show();
                             int i = spinner.getSelectedItemPosition();
                             String categoryID = categoryIDlist.get(i);
-                            Product product = new Product("", edtxtproductName.getText().toString(), edtxtDescription.getText().toString(), Double.valueOf(edtxtPrice.getText().toString()), Integer.valueOf(edtxtDiscount.getText().toString()), categoryID, Integer.valueOf(edtxtRemaning.getText().toString()), downloadUrl1, downloadUrl2, downloadUrl3);
-                            boolean b = FirebaseDb.getInstance().addNewProduct(product);
+                            String id = FirebaseDb.databaseReference().child("product").push().getKey();
+                            Product product = new Product(id, edtxtproductName.getText().toString(), edtxtDescription.getText().toString(), Double.valueOf(edtxtPrice.getText().toString()), Integer.valueOf(edtxtDiscount.getText().toString()), categoryID, Integer.valueOf(edtxtRemaning.getText().toString()), downloadUrl1, downloadUrl2, downloadUrl3);
+                            boolean b = FirebaseDb.getInstance().create("product",product.getProductId(),product);
 
                             if (b) {
                                 dialog.dismiss();

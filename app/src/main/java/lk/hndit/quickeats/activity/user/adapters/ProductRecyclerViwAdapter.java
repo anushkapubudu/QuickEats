@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity.adapters;
+package lk.hndit.quickeats.activity.user.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,8 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.ProductDetailViw;
-import lk.hndit.quickeats.activity.ProductViwUser;
+import lk.hndit.quickeats.activity.user.ProductDetailViw;
 import lk.hndit.quickeats.model.Cart;
 import lk.hndit.quickeats.model.Product;
 import lk.hndit.quickeats.services.FirebaseAuth;
@@ -47,7 +46,6 @@ public class ProductRecyclerViwAdapter extends RecyclerView.Adapter<ProductRecyc
         return new ViwHolder(view,context, new onFoodClick() {
             @Override
             public void foodClick(int p) {
-                Toast.makeText(context, "= "+p, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(context, ProductDetailViw.class);
                 intent.putExtra("productId",productList.get(p).getProductId());
@@ -88,6 +86,8 @@ public class ProductRecyclerViwAdapter extends RecyclerView.Adapter<ProductRecyc
         holder.txtDiscount.setText(String.valueOf(product.getDiscount()));
         holder.txtitemsremainning.setText(String.valueOf(product.getRemaining()));
         Picasso.get().load(product.getUrl1()).into(holder.productImage);
+
+
 
     }
 

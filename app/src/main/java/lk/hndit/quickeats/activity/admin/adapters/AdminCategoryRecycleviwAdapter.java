@@ -1,4 +1,5 @@
-package lk.hndit.admin_quickeats.activitys.adapters;
+package lk.hndit.quickeats.activity.admin.adapters;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +18,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.activitys.EditCategory;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.EditCategory;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.services.FirebaseDb;
 
 public class AdminCategoryRecycleviwAdapter extends RecyclerView.Adapter<AdminCategoryRecycleviwAdapter.ViwHolder> {
 
@@ -35,7 +36,7 @@ public class AdminCategoryRecycleviwAdapter extends RecyclerView.Adapter<AdminCa
     @NonNull
     @Override
     public ViwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.category_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.category_row_admin, parent, false);
         return new ViwHolder(view, context, new MyClickListener() {
             @Override
             public void onEdit(int p) {
@@ -51,7 +52,7 @@ public class AdminCategoryRecycleviwAdapter extends RecyclerView.Adapter<AdminCa
             public void onDelete(int p) {
 
                 Toast.makeText(context, "delete pressed", Toast.LENGTH_SHORT).show();
-                FirebaseDb.getInstance().deleteCategory(list.get(p));
+                FirebaseDb.getInstance().delete("category",list.get(p).getId().toString());
             }
         });
     }
@@ -61,6 +62,8 @@ public class AdminCategoryRecycleviwAdapter extends RecyclerView.Adapter<AdminCa
         Category category = list.get(position);
         holder.txtcategorytName.setText(category.getCategoryName());
         Picasso.get().load(category.getImageUrl()).into(holder.categoryImage);
+
+
     }
 
     @Override

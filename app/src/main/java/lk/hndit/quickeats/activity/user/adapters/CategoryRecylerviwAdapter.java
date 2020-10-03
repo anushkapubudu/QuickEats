@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity.adapters;
+package lk.hndit.quickeats.activity.user.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.ProductViwUser;
+import lk.hndit.quickeats.activity.user.ProductViwUser;
 import lk.hndit.quickeats.model.Category;
 
 public class CategoryRecylerviwAdapter extends RecyclerView.Adapter<CategoryRecylerviwAdapter.ViewHolder> {
@@ -51,6 +50,7 @@ public class CategoryRecylerviwAdapter extends RecyclerView.Adapter<CategoryRecy
         Category category = list.get(position);
         holder.textView.setText(category.getCategoryName());
         Picasso.get().load(category.getImageUrl()).into(holder.imageView);
+
 
 
     }

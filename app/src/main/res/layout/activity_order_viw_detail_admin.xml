@@ -57,7 +57,7 @@
                             android:backgroundTint="@android:color/darker_gray"
                             android:src="@drawable/ic_watch_later_black_24dp"
                             app:fabSize="mini"
-                            android:clickable="false"
+
                             />
 
                         <TextView
@@ -84,7 +84,7 @@
                             android:backgroundTint="@android:color/darker_gray"
                             android:src="@drawable/ic_restaurant_black_24dp"
                             app:fabSize="mini"
-                            android:clickable="false"/>
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -109,8 +109,7 @@
                             android:layout_gravity="center"
                             android:backgroundTint="@android:color/darker_gray"
                             android:src="@drawable/ic_directions_bike_black_24dp"
-                            app:fabSize="mini"
-                            android:clickable="false"/>
+                            app:fabSize="mini" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -135,8 +134,7 @@
                             android:layout_gravity="center"
                             android:src="@drawable/ic_done_black_24dp"
                             android:backgroundTint="@android:color/darker_gray"
-                            app:fabSize="mini"
-                            android:clickable="false"/>
+                            app:fabSize="mini" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -179,7 +177,7 @@
 
 
                 <ImageView
-                    android:id="@+id/Imgev_main"
+                    android:id="@+id/Imgev_main_admin"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -187,7 +185,7 @@
                     android:src="@drawable/ic_watch_later_black_24dp" />
 
                 <TextView
-                    android:id="@+id/txt_order_del_main"
+                    android:id="@+id/txt_order_del_main_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Your Order is Waiting."
@@ -239,7 +237,7 @@
                             android:textSize="14dp"/>
 
                         <TextView
-                            android:id="@+id/txt_order_del_order_id"
+                            android:id="@+id/txt_order_del_order_id_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0000000000"
@@ -263,7 +261,7 @@
                             android:textSize="14dp"/>
 
                         <TextView
-                            android:id="@+id/txt_order_del_user_name"
+                            android:id="@+id/txt_order_del_user_name_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0000000000"
@@ -287,7 +285,7 @@
                             android:textSize="14dp"/>
 
                         <TextView
-                            android:id="@+id/txt_order_del_contact_no"
+                            android:id="@+id/txt_order_del_contact_no_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0000000000"
@@ -311,7 +309,7 @@
                             android:textSize="14dp"/>
 
                         <TextView
-                            android:id="@+id/txt_order_del_address"
+                            android:id="@+id/txt_order_del_address_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0000000000"
@@ -335,7 +333,7 @@
                             android:textSize="14dp"/>
 
                         <TextView
-                            android:id="@+id/txt_order_del_datetime"
+                            android:id="@+id/txt_order_del_datetime_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0000000000"
@@ -402,7 +400,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txt_order_del_productName"
+                    android:id="@+id/txt_order_del_productName_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:width="200dp"
@@ -410,16 +408,16 @@
                     android:textColor="@color/colorPrimaryDark"/>
 
                 <TextView
-                    android:id="@+id/txt_order_del_quentity"
+                    android:id="@+id/txt_order_del_quentity_admin"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
+                    android:layout_height="match_parent"
                     android:width="60dp"
+                    android:text=""
                     android:textAlignment="center"
-                    android:textColor="@color/colorPrimaryDark"/>
+                    android:textColor="@color/colorPrimaryDark" />
 
                 <TextView
-                    android:id="@+id/txt_order_del_price"
+                    android:id="@+id/txt_order_del_price_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -444,7 +442,7 @@
                     android:textSize="20dp"/>
 
                 <TextView
-                    android:id="@+id/txt_order_del_discount"
+                    android:id="@+id/txt_order_del_discount_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0000.0"
@@ -483,7 +481,7 @@
                         android:textSize="30dp"/>
 
                     <TextView
-                        android:id="@+id/txt_order_del_total"
+                        android:id="@+id/txt_order_del_total_admin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0000.0"
@@ -516,11 +514,12 @@
         android:backgroundTint="@color/rowColour">
 
         <Button
-            android:id="@+id/btn_order_del_cnfirmorder"
+            android:id="@+id/btn_order_del_viwLocation_admin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Confirm Order Received"
+            android:text="viw Location"
+            android:drawableStart="@drawable/ic_directions_bike_black_24dp"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_marginLeft="12dp"

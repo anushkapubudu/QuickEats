@@ -1,4 +1,4 @@
-package lk.hndit.admin_quickeats.activitys;
+package lk.hndit.quickeats.activity.admin;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -29,13 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.activitys.adapters.AdminProductsRecycleViwAdapter;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.model.Order;
-import lk.hndit.admin_quickeats.model.Product;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
-import lk.hndit.admin_quickeats.util.GpsTracker;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.adapters.AdminProductsRecycleViwAdapter;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.model.Order;
+import lk.hndit.quickeats.model.Product;
+import lk.hndit.quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.util.GpsTracker;
 
 public class AdminDashboard extends AppCompatActivity {
 
@@ -118,11 +118,13 @@ public class AdminDashboard extends AppCompatActivity {
 
         loadUserDatatoDashboard();
 
-
+        //TODO: CHANGE HEAR
         orderlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // startActivity(new Intent(AdminDashboard.this, OrderViwAdmin.class));
                 startActivity(new Intent(AdminDashboard.this, OrderViwAdmin.class));
+
             }
         });
 

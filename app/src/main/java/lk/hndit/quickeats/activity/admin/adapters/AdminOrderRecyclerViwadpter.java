@@ -1,4 +1,5 @@
-package lk.hndit.admin_quickeats.activitys.adapters;
+package lk.hndit.quickeats.activity.admin.adapters;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import lk.hndit.admin_quickeats.activitys.OrderTrackingAdmin;
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.model.Order;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.OrderViwDetailAdmin;
+import lk.hndit.quickeats.activity.admin.TrackingOrderAdmin;
+import lk.hndit.quickeats.activity.user.OrderDetailViwUser;
+import lk.hndit.quickeats.model.Order;
 
 public class AdminOrderRecyclerViwadpter extends RecyclerView.Adapter<AdminOrderRecyclerViwadpter.ViwHolder> {
 
@@ -33,9 +36,11 @@ public class AdminOrderRecyclerViwadpter extends RecyclerView.Adapter<AdminOrder
         return new ViwHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_order_row, parent, false), context, new onOrderClick() {
             @Override
             public void onOrderClick(int p) {
-                Intent intent = new Intent(context, OrderTrackingAdmin.class);
-                intent.putExtra("latitude",orderList.get(p).getLatitude());
-                intent.putExtra("longitude",orderList.get(p).getLongitude());
+
+
+
+                Intent intent = new Intent(context, OrderViwDetailAdmin.class);
+                intent.putExtra("orderId",orderList.get(p).getOrderId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -47,7 +52,7 @@ public class AdminOrderRecyclerViwadpter extends RecyclerView.Adapter<AdminOrder
 
         Order order = orderList.get(position);
         holder.txtOrderId.setText(order.getOrderId());
-        holder.txtOrderQuentity.setText(String.valueOf(order.getStatus())); //todo:
+        holder.txtOrderQuentity.setText(String.valueOf(order.getCartList().size())); //todo:
         holder.txtOrderPrice.setText(String.valueOf(order.getTotalPrice()));
 
     }

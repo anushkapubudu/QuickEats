@@ -1,9 +1,8 @@
-package lk.hndit.quickeats.activity.user;
+package lk.hndit.quickeats.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,15 +12,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import lk.hndit.quickeats.activity.MainActivity;
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.admin.AdminTest;
+import lk.hndit.quickeats.activity.admin.AdminDashboard;
+import lk.hndit.quickeats.activity.user.UserDashboard;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 5000;
 
     private com.google.firebase.auth.FirebaseAuth auth;
     private FirebaseUser user;
@@ -42,11 +41,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    Log.d("TAG", "+++++++===========================: " + snapshot.toString());
 
                     if (snapshot.exists()) {
                         USERTYPE = snapshot.child("userType").getValue(String.class);
-                        Log.d("TAG", "+++++++===========================: " + snapshot.toString());
 
 
                     }
@@ -61,18 +58,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
 
 
-//        Log.d("TAG", "================================== : " + user.getPhoneNumber());
-
-
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-//                            Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-//                            startActivity(i);
-
 
                 if (USERTYPE != null) {
                     switch (USERTYPE) {
@@ -82,7 +71,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             finish();
                             break;
                         case "ADMIN":
-                            startActivity(new Intent(SplashScreenActivity.this, AdminTest.class));
+                            startActivity(new Intent(SplashScreenActivity.this, AdminDashboard.class));
                             finish();
                             break;
                         default:
@@ -90,13 +79,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                             finish();
                             break;
                     }
-                }else {
+                } else {
                     startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                     finish();
                 }
 
 
-                // close this activity
                 finish();
             }
         }, SPLASH_TIME_OUT);

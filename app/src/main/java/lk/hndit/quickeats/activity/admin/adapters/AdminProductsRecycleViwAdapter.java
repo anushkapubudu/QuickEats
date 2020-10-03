@@ -1,4 +1,5 @@
-package lk.hndit.admin_quickeats.activitys.adapters;
+package lk.hndit.quickeats.activity.admin.adapters;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +19,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.activitys.EditProduct;
-import lk.hndit.admin_quickeats.model.Product;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.EditProduct;
+import lk.hndit.quickeats.model.Product;
+import lk.hndit.quickeats.services.FirebaseDb;
 
 public class AdminProductsRecycleViwAdapter extends RecyclerView.Adapter<AdminProductsRecycleViwAdapter.ViwHolder> {
 
@@ -43,7 +44,7 @@ public class AdminProductsRecycleViwAdapter extends RecyclerView.Adapter<AdminPr
                 Toast.makeText(context, "edit  "+p, Toast.LENGTH_SHORT).show();
 
 
-                Intent intent = new Intent(context,EditProduct.class);
+                Intent intent = new Intent(context, EditProduct.class);
                 intent.putExtra("productId",list.get(p).getProductId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
@@ -55,7 +56,7 @@ public class AdminProductsRecycleViwAdapter extends RecyclerView.Adapter<AdminPr
             public void onDelete(int p) {
                 Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
                 Product product = list.get(p);
-                FirebaseDb.getInstance().deleteProduct(product.getProductId());
+                FirebaseDb.getInstance().delete("product", product.getProductId());
             }
         });
     }
@@ -67,6 +68,8 @@ public class AdminProductsRecycleViwAdapter extends RecyclerView.Adapter<AdminPr
             holder.txtPrice.setText(String.valueOf(product.getPrice()));
             holder.txtDiscount.setText(String.valueOf(product.getDiscount()));
             Picasso.get().load(product.getUrl1()).into(holder.productImage);
+
+
 
 
     }

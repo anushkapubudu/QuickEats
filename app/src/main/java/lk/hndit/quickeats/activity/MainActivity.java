@@ -1,4 +1,4 @@
-package lk.hndit.quickeats;
+package lk.hndit.quickeats.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,10 +16,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import lk.hndit.quickeats.activity.AdminTest;
-import lk.hndit.quickeats.activity.UserDashboard;
-import lk.hndit.quickeats.activity.VerifyPhone;
-import lk.hndit.quickeats.model.User;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.AdminDashboard;
+import lk.hndit.quickeats.activity.admin.AdminTest;
+import lk.hndit.quickeats.activity.user.UserDashboard;
 import lk.hndit.quickeats.services.FirebaseDb;
 
 public class MainActivity extends AppCompatActivity {
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                         finish();
                                         break;
                                     case "ADMIN":
-                                        startActivity(new Intent(MainActivity.this, AdminTest.class));
+                                        startActivity(new Intent(MainActivity.this, AdminDashboard.class));
                                         finish();
                                         break;
                                     default:

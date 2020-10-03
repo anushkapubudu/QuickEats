@@ -2,12 +2,11 @@
     <item
         android:id="@+id/order_active"
         android:enabled="true"
-        android:icon="@drawable/ic_flash_on_black_24dp"
+        android:icon="@drawable/ic_refresh_black_24dp"
         android:title="Active"/>
     <item
         android:id="@+id/order_recent"
         android:enabled="true"
         android:icon="@drawable/ic_playlist_add_check_black_24dp"
         android:title="Recent"/>
-
 </menu>

@@ -1,4 +1,4 @@
-package lk.hndit.quickeats.activity;
+package lk.hndit.quickeats.activity.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.adapters.CategoryRecylerviwAdapter;
+import lk.hndit.quickeats.activity.admin.adapters.AdminCategoryRecycleviwAdapter;
+import lk.hndit.quickeats.activity.user.adapters.CategoryRecylerviwAdapter;
 import lk.hndit.quickeats.model.Category;
 import lk.hndit.quickeats.services.FirebaseAuth;
 import lk.hndit.quickeats.services.FirebaseDb;
@@ -36,6 +40,7 @@ public class UserDashboard extends AppCompatActivity {
     private CategoryRecylerviwAdapter adapter;
     private List<Category> categoryList;
     private BottomNavigationView bottomNavigationView;
+    private ImageButton btnSearch,btnMenu;
 
 
     @Override
@@ -44,23 +49,30 @@ public class UserDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_user_dashboard);
 
         bottomNavigationView = findViewById(R.id.user_bottom_navigation);
-
-
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-        //textView = findViewById(R.id.textView);
-       // btnLogout = findViewById(R.id.btnLogout);
         recyclerView = findViewById(R.id.categoryrecyclerviwUserDashboard);
         categoryList = new ArrayList();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+        btnSearch = findViewById(R.id.btnSearch);
+        btnMenu = findViewById(R.id.btnMenu);
+
+
         int meniitemid = bottomNavigationView.getSelectedItemId();
 
         bottomNavigationView.setSelectedItemId(R.id.page_1);
-//        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(meniitemid);
-//        badge.setNumber(99);
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(1);
+        badge.setNumber(99);
+
+
+//        btnSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserDashboard.this,SearchProduct.class));
+//            }
+//        });
 
 
 

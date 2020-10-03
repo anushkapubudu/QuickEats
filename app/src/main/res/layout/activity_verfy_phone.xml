@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    tools:context=".activity.user.VerifyPhone">
+    android:background="@drawable/background_quickeats"
+    tools:context=".activity.VerifyPhone">
 
 
     <EditText
         android:id="@+id/edtxtCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="259dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="280dp"
         android:background="@drawable/et_style"
-        android:hint="Enter Code to verify"
+        android:hint="Enter Code to Verify"
         android:padding="10dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,12 +27,36 @@
         android:layout_height="wrap_content"
         android:background="@drawable/et_style"
         android:text="Verify"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtxtCode"
         app:layout_constraintVertical_bias="0.079"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter 6-digit of code \nyou have received via SMS"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/edtxtCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.94" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.762"
+        app:srcCompat="@drawable/quickeats_logo_color" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ public class FirebaseAuth {
     private com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
     private static FirebaseAuth mauth;
 
-    public FirebaseAuth() {
+    private FirebaseAuth() {
     }
 
     public static FirebaseAuth getInstance(){

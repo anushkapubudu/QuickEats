@@ -1,9 +1,9 @@
-package lk.hndit.quickeats.activity.adapters;
+package lk.hndit.quickeats.activity.user.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import lk.hndit.quickeats.R;
-import lk.hndit.quickeats.activity.CartViw;
+import lk.hndit.quickeats.activity.user.ProductDetailViw;
 import lk.hndit.quickeats.model.Cart;
 import lk.hndit.quickeats.model.Product;
 import lk.hndit.quickeats.services.FirebaseDb;
@@ -74,6 +74,14 @@ public class CartRecyclerViwAdapter extends RecyclerView.Adapter<CartRecyclerViw
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
+
+            @Override
+            public void onCartClick(int p) {
+                Intent intent = new Intent(context, ProductDetailViw.class);
+                intent.putExtra("productId",productList.get(p).getProductId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
         });
     }
 
@@ -86,6 +94,7 @@ public class CartRecyclerViwAdapter extends RecyclerView.Adapter<CartRecyclerViw
         holder.txtPrice.setText(String.valueOf(product.getPrice() * cart.getQuantity()));
         holder.txtQueantity.setText(String.valueOf(cart.getQuantity()));
         Picasso.get().load(product.getUrl1()).into(holder.imageView);
+
 
 
 
@@ -111,6 +120,7 @@ public class CartRecyclerViwAdapter extends RecyclerView.Adapter<CartRecyclerViw
             btndel = itemView.findViewById(R.id.cart_del_product_btn);
             listener = myClickListener;
 
+            itemView.setOnClickListener(this);
             btndel.setOnClickListener(this);
 
         }
@@ -123,6 +133,7 @@ public class CartRecyclerViwAdapter extends RecyclerView.Adapter<CartRecyclerViw
                     listener.onDelete(this.getLayoutPosition());
                     break;
                 default:
+                    listener.onCartClick(this.getLayoutPosition());
                     break;
             }
         }
@@ -130,5 +141,6 @@ public class CartRecyclerViwAdapter extends RecyclerView.Adapter<CartRecyclerViw
 
     public interface MyClickListener {
         void onDelete(int p);
+        void onCartClick(int p);
     }
 }

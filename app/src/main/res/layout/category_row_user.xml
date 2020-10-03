@@ -4,23 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="2dp"
+    android:layout_margin="10dp"
     android:elevation="4dp"
     android:backgroundTint="@color/rowColour"
     app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
 
 
 
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/category_thumbnail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
             android:cropToPadding="true"
             android:src="@drawable/et_style" />
 
@@ -28,43 +29,20 @@
             android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="25dp"
+            android:layout_alignBottom="@+id/category_thumbnail"
+            android:background="@color/black_transparent_50"
             android:text="category 01"
+            android:padding="20dp"
+            android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
             android:textSize="20sp" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 
-    <!--<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:gravity="end">
-        <ImageButton
-            android:id="@+id/category_edit_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/btn_dialog"
-            android:backgroundTint="@android:color/transparent"
-            android:layout_gravity="right"
-            style="@android:style/Animation"/>
 
-        <ImageButton
-            android:id="@+id/category_delete_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/btn_dialog"
-            android:backgroundTint="@android:color/transparent"
-            android:layout_gravity="right"
-            style="@android:style/Animation"/>
-
-
-    </LinearLayout>-->
     </androidx.cardview.widget.CardView>
 

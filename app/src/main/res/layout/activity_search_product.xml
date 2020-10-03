@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rowColour"
+    android:layout_weight="3"
+    android:orientation="vertical"
+    tools:context=".activity.user.SearchProduct">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:layout_weight="0.2"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtxtSearchviw"
+            android:layout_width="350dp"
+            android:layout_height="68dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/et_style"
+            android:focusableInTouchMode="true"
+            android:hint="  Search Products...  "
+            android:inputType="text"
+            android:textColorHint="@color/colorPrimaryDark" />
+
+        <ImageButton
+            android:id="@+id/btnsearchviw"
+            android:layout_width="38dp"
+            android:layout_height="89dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_search_black_24dp" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchrecyclerviw"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/txtNotfoundtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Items Found!"
+            android:textColor="@color/colorPrimaryDark"
+            android:visibility="gone"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

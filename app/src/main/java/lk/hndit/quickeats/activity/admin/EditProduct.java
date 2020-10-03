@@ -1,16 +1,10 @@
-package lk.hndit.admin_quickeats.activitys;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package lk.hndit.quickeats.activity.admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -30,11 +28,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.model.Product;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
-import lk.hndit.admin_quickeats.services.FirebaseStorage;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.model.Product;
+import lk.hndit.quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.services.FirebaseStorage;
 
 public class EditProduct extends AppCompatActivity {
 
@@ -179,6 +177,9 @@ public class EditProduct extends AppCompatActivity {
                     Picasso.get().load(product.getUrl1()).into(imageviw1);
                     Picasso.get().load(product.getUrl2()).into(imageviw2);
                     Picasso.get().load(product.getUrl3()).into(imageviw3);
+
+
+
 
 
 

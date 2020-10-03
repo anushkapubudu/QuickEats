@@ -1,6 +1,5 @@
-package lk.hndit.admin_quickeats.activitys;
+package lk.hndit.quickeats.activity.admin;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,10 +18,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
-import lk.hndit.admin_quickeats.services.FirebaseStorage;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.services.FirebaseStorage;
 
 public class AddCategory extends AppCompatActivity {
 
@@ -78,8 +77,9 @@ public class AddCategory extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     url = uri.toString();
-                                    Category category = new Category("", edtxtCategoryName.getText().toString(), url);
-                                    boolean b = FirebaseDb.getInstance().addNewCategory(category);
+                                    String id = FirebaseDb.databaseReference().child("category").push().getKey();
+                                    Category category = new Category(id, edtxtCategoryName.getText().toString(), url);
+                                    boolean b = FirebaseDb.getInstance().create("category",category.getId(),category);
 
                                     if (b) {
                                         Toast.makeText(AddCategory.this, "New Category Added Successfully!", Toast.LENGTH_LONG).show();

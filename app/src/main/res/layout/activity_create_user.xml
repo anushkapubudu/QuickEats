@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.user.CreateUser">
+    android:background="@drawable/background_quickeats"
+    tools:context=".activity.CreateUser">
 
 
     <EditText
         android:id="@+id/edtxtUsername"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="335dp"
+        android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="236dp"
+        android:layout_marginTop="276dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/et_style"
         android:hint="Username"
@@ -23,16 +24,29 @@
 
     <Button
         android:id="@+id/btnCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="178dp"
+        android:layout_height="52dp"
         android:background="@drawable/et_style"
         android:text="Create Account"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtxtCode"
-        app:layout_constraintVertical_bias="0.079"
+        app:layout_constraintTop_toBottomOf="@+id/edtxtUsername"
+        app:layout_constraintVertical_bias="0.078"
         tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="131dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="92dp"
+        app:layout_constraintBottom_toTopOf="@+id/edtxtUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.105"
+        app:srcCompat="@drawable/quickeats_logo_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

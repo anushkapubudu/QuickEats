@@ -1,14 +1,15 @@
-package lk.hndit.admin_quickeats.activitys;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package lk.hndit.quickeats.activity.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -18,10 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.hndit.admin_quickeats.R;
-import lk.hndit.admin_quickeats.activitys.adapters.AdminCategoryRecycleviwAdapter;
-import lk.hndit.admin_quickeats.model.Category;
-import lk.hndit.admin_quickeats.services.FirebaseDb;
+import lk.hndit.quickeats.R;
+import lk.hndit.quickeats.activity.admin.adapters.AdminCategoryRecycleviwAdapter;
+import lk.hndit.quickeats.model.Category;
+import lk.hndit.quickeats.services.FirebaseDb;
 
 public class CategoryInAdmin extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class CategoryInAdmin extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Category> categoryList;
     private AdminCategoryRecycleviwAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
